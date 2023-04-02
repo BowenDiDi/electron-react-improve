@@ -13,6 +13,7 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import WindowController from './window_control';
 import { resolveHtmlPath } from './util';
 
 class AppUpdater {
@@ -81,7 +82,7 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.loadURL(`${resolveHtmlPath('index.html')}`);
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -100,6 +101,8 @@ const createWindow = async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+  const windowController = new WindowController(mainWindow);
+  windowController.mountWindowListener();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {

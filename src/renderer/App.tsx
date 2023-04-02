@@ -1,4 +1,5 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import Settings from './pages/settings';
+import { getQueryParam } from './utils/utils';
 import icon from '../../assets/icon.svg';
 import './App.css';
 
@@ -8,7 +9,7 @@ function Hello() {
       <div className="Hello">
         <img width="200" alt="icon" src={icon} />
       </div>
-      <h1>electron-react-boilerplate</h1>
+      <h1>electron-react-im.prove</h1>
       <div className="Hello">
         <a
           href="https://electron-react-boilerplate.js.org/"
@@ -19,19 +20,7 @@ function Hello() {
             <span role="img" aria-label="books">
               📚
             </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
+            Hello
           </button>
         </a>
       </div>
@@ -40,11 +29,22 @@ function Hello() {
 }
 
 export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
+  const path = getQueryParam('path');
+  console.log('getQueryParam', getQueryParam('path'));
+  switch (path) {
+    case 'settings':
+      return <Settings />;
+    default:
+      return <Hello />;
+  }
+  // window.history.push({ pathname: '/index/demo3', query: { id: 1 } })
+  // return (
+  //   <Settings />
+  //   // <Router>
+  //   //   <Routes>
+  //   //     <Route path="/" element={<Hello />} />
+  //   //     <Route path="/settings" element={<Settings />} />
+  //   //   </Routes>
+  //   // </Router>
+  // );
 }
